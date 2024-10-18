@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chat app</title>
+</head>
+
+<body>
+    <h1>creating web socket connection</h1>
+    <button onClick="formConnection()"> form a connection</button>
+    <input type="text" placeholder="enter your message" id="message">
+    <div class="replychat">
+        <p>this is where the broadcastted message will appear </p>
+        <p id="broadcast"></p>
+    </div>
+    <button onClick="sendMessage()">send message</button>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const messages = document.getElementById("message");
+        socket.on('userMessage', (msg) => {
+            console.log('is sth happening here');
+            document.getElementById("broadcast").innerHTML = msg;
+        })
+
+        function sendMessage() {
+            console.log(messages.value);
+            socket.emit('userMessage', messages.value);
+        }
+    </script>
+</body>
+
+</html>
